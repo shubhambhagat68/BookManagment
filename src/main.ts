@@ -10,6 +10,6 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   }); 
-  await app.listen(3000,()=> console.log(`PMT ATTENDANCE running on port ${3000}`));
+  await app.listen(3000,()=> console.log(`Book Management running on port ${3000}`));
 }
 bootstrap();
