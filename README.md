@@ -45,29 +45,60 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+How to Install
 
-```bash
-# unit tests
-$ npm run test
+1) Just make a local clone of repository the update code is in main only.
 
-# e2e tests
-$ npm run test:e2e
+2) Npm i --> to install the required packages.
 
-# test coverage
-$ npm run test:cov
-```
+3) Have a local mongoDb Database.
 
-## Support
+4) You can change port in main.ts if are using port 3000 for other purpose.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+5) In app.module you can see this line ( mongodb://127.0.0.1:27017 )which is making connection to you local momgoDb and it is followed by   this,"/Book" which represnt to which database it should connect.
 
-## Stay in touch
+Note: I am using global prefix as api in main.ts , so end point will be always after this -->
+http://localhost:3000/api/book-management-module/"followed by end point which you can find in book-management-module.controller" 
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Example -> http://localhost:3000/api/book-management-module/addBook
 
-## License
 
-Nest is [MIT licensed](LICENSE).
+
+
+
+ASSUMPTION:
+1] No Book will have same title and author , if any book with same title and author exist it will throw error that book exist, which is case insensitive. That is if "shubham" exists then "Shubham" will throw error for a book with same title.
+
+2] While Creating Book Record Title and Author is mandatory, while summary can be empty.
+While Updating their is no such restriction.You can update any field.
+ 
+ 
+
+
+ENDS POINTS:
+
+NOTE:  HERE IN PARAMS "id " WHICH IS PASSED IS" uniqueId" WHICH IS STORED IN DB, WHEN THE RECORD IS CREATED.
+  
+  GET   http://localhost:3000/api/book-management-module/getBook --> Query params (id) 
+
+        when this above api is called without id it will return all record of book.But when id is pass and it will return particular record and if no book          is present against that id then error will be throw.
+
+ POST   http://localhost:3000/api/book-management-module/addBook --> Body()
+
+        This APi is to create a new book record that will check that if title and author combination is unique.Then it will create record else it will              throw error with Book Already Exist.
+        While Creating Book Record Author and Title are compulsory.
+
+PATCH  http://localhost:3000/api/book-management-module/updateBookRecord --> Query params (id) & Body()
+
+        This is to update any record , if id is not pass it will throw error saying id need to given, and if id is given and record is not present againt 
+        that then No Book Found error will be thrown. We need to pass fields in body, with title , author , summary.
+
+DELETE http://localhost:3000/api/book-management-module/deleteBook --> Query params (id)
+
+        In this we need to pass the uniqueId as id in query to delete the record if id is not passed it will throw an error.
+
+  
+NOTE : I HAVE NOT HANDLED ARRAY OF DATA TO DO CRUD OPERATIONS.CODE CAN BE MODIFIED IF ANY SUCH REQUIREMENT COMES.
+
+  
+
