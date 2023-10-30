@@ -134,13 +134,18 @@ export class BookManagementModuleService {
                     }
                 } 
             }
-
+            
           
             const book = await this.bookManagement.findOneAndUpdate({uniqueId:id},body,{useFindAndModify: false}).exec();
 
 
             if (!book) {
-            throw new NotFoundException('Book Not Found');
+                let show = {
+                    type: 'error',
+                    message: 'Book Record Not Found!',
+                };
+
+                return show
             }
     
             return {
@@ -167,12 +172,21 @@ export class BookManagementModuleService {
                     }
                 }
             }
-            await this.bookManagement.deleteOne({uniqueId:id}).exec();
-
-            const show = {
-                type: 'success',
-                message: 'Book Record Deleted Successfully!',
-              };
+            const deletedRecord = await this.bookManagement.deleteOne({uniqueId:id}).exec();
+            let show;
+            if(deletedRecord.acknowledged==true&&deletedRecord.deletedCount==0){
+                show = {
+                    type: 'error',
+                    message: 'Book Record Not Found!',
+                  };
+            }
+            else{
+                show = {
+                    type: 'success',
+                    message: 'Book Record Deleted Successfully!',
+                };
+            }
+           
 
             return { show };
         }
