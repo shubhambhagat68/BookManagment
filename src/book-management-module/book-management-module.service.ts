@@ -28,7 +28,7 @@ export class BookManagementModuleService {
             return book;
         }
 
-        const allBooks = await this.bookManagement.find().exec();
+         const allBooks = await this.bookManagement.find().sort({ updatedAt: -1 }).exec();
 
         return allBooks;
     }   
