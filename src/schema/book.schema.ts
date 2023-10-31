@@ -15,6 +15,6 @@ export const BookSchema = new mongoose.Schema({
   author: String,
 
   summary: String
-})
+},{ timestamps: true })
 
 
