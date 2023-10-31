@@ -60,7 +60,7 @@ export class BookManagementModuleService {
         book.title = body.title.trim()
 
         if(body?.summary){
-            book.title = body.summary.trim()
+            book.summary = body.summary.trim()
         }
 
         await book.save()
